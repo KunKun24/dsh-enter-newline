@@ -10,6 +10,7 @@ window.__ModuleLoader__.load({
 
     const MUTED = 'var(--dsw-alias-text-secondary, #8b93a7)';
     const LINE = 'var(--dsw-alias-border-secondary, rgba(128,128,128,.22))';
+    const BRAND = 'var(--dsw-alias-brand-primary, #4d6bfe)';
 
     function readSettings() {
       let raw = null;
@@ -129,6 +130,26 @@ window.__ModuleLoader__.load({
       );
     }
 
+    /** 「觉得好用点个 Star」：所有插件设置页统一的仓库入口。 */
+    function RepoInvite() {
+      return h('div', {
+        style: {
+          marginTop: 18, paddingTop: 14, borderTop: '1px solid ' + LINE,
+          display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
+          fontSize: 12.5, color: MUTED,
+        },
+      },
+        h('span', { style: { color: '#f5a623' } }, '\u2605'),
+        h('span', null, '觉得好用的话，点个 Star 吧'),
+        h('a', {
+          href: 'https://github.com/KunKun24/dsh-enter-newline',
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          style: { color: BRAND, textDecoration: 'none' },
+        }, 'GitHub 仓库')
+      );
+    }
+
     function Panel() {
       const [view, setView] = useState(() => Object.assign({}, settings));
       useEffect(() => {
@@ -159,6 +180,7 @@ window.__ModuleLoader__.load({
           '只作用于聊天输入框，不影响会话改名、设置页等其他输入框；',
           '中文输入法组合过程中按 Enter 不会被拦截。',
         ),
+        h(RepoInvite, { key: 'repo' }),
       );
     }
 

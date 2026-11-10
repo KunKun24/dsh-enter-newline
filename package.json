@@ -1,6 +1,6 @@
 {
   "name": "dsh-enter-newline",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "按 Enter 只换行、不发送（DeepSeek Harness 插件）",
   "icon": "icon.png",
   "type": "module",
