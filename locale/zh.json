@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "回车换行",
+    "description": "按 Enter 只换行、不发送：长提示词写到一半不会飞出去，Shift+Enter 行为不变。"
+  }
+}

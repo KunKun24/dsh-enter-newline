@@ -1,0 +1,3 @@
+- insert:
+    - id: enter-newline
+      name: 'dsh-enter-newline'
