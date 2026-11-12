@@ -1,5 +1,7 @@
 # dsh-enter-newline
 
+[中文](README.md) · DeepSeek Harness plugin · MIT
+
 Press Enter inserts a newline instead of sending the message.
 
 ## What it does
