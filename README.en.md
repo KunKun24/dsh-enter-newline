@@ -1,78 +1,76 @@
-# dsh-enter-newline
+# dsh-enter-newline · Enter inserts a newline
 
-[中文](README.md) · DeepSeek Harness plugin · MIT
+[**简体中文**](README.md) · [English](README.en.md)
 
-Press Enter inserts a newline instead of sending the message.
+![version](https://img.shields.io/badge/version-1.1.0-blue)
+![license](https://img.shields.io/badge/license-MIT-2ea44f)
+![dsh](https://img.shields.io/badge/DSH-%E2%89%A50.2.0-6f42c1)
+
+Enter inserts a newline instead of sending — half-written prompts stay in the box.
+
+![Type two lines and press Enter: it only wraps, nothing is sent](assets/demo.gif)
+
+> A DeepSeek Harness (DSH) plugin for DSH 0.2.0 or newer.
 
 ## What it does
 
-In the chat composer, `Enter` inserts a line break and does **not** send; use the
-send button to submit. `Shift+Enter` keeps its default behaviour, and Enter is
-never swallowed while an IME composition is in progress.
+DSH sends on Enter by default, so one stray keypress can fire a half-written prompt. This plugin turns Enter into a line break; sending is done with the send button (`Shift+Enter` keeps its old behaviour).
 
-Only the composer is affected — session renaming, settings fields and every other
-input in the UI keep the default Enter behaviour.
+## Features
 
-## Why
+- Enter inserts a newline and does not send
+- `Shift+Enter` behaves as before (still a newline, still no send)
+- Enter during Chinese IME composition is left alone, so it still picks candidates
+- Toggle from the sidebar "换行设置" page without reloading
 
-DeepSeek Harness sends on Enter by default. Half-written long prompts used to fly
-off mid-sentence.
+## Installation
 
-## How it works
+**Option 1 — plugin marketplace (recommended)**
 
-The composer is a Lexical rich-text editor. Rewriting the DOM directly (for
-example with `execCommand`) is reverted by Lexical on its next reconcile and can
-wipe pasted text.
+Search `dsh-enter-newline` in DSH's plugin marketplace.
 
-Instead the plugin catches the real `keydown` event in the capture phase and
-redefines its `shiftKey` getter to `true`:
-
-- Lexical reads it as `Shift+Enter` and runs `INSERT_LINE_BREAK_COMMAND`
-- the Harness submit handler has `if (event.shiftKey === true) return false`
-
-The event is never re-dispatched, so nothing can loop, and the editor model stays
-consistent.
-
-## Settings
-
-Sidebar → "换行设置" (Line break). The switch is stored in this browser only, in
-`localStorage["dsh-enter-newline"]`.
-
-## Install
-
-### Plugin marketplace
-
-Search for `dsh-enter-newline` in the Harness plugin marketplace and install it.
-
-### Release tarball
+**Option 2 — release tarball**
 
 ```bash
-dsh plugin --profile web add ./dsh-enter-newline-1.0.0.tgz
+dsh plugin --profile web add https://github.com/KunKun24/dsh-enter-newline/releases/download/v1.1.0/dsh-enter-newline-1.1.0.tgz
 ```
 
-### Manual
+**Option 3 — local source**
 
 ```bash
-cp -r dsh-enter-newline ~/.dsh/profiles/web/vendor/
-# add to ~/.dsh/profiles/web/package.json
-#   "dependencies": { "dsh-enter-newline": "file:./vendor/dsh-enter-newline" }
-cd ~/.dsh/profiles/web && pnpm install && dsh web
+dsh plugin --profile web add link:/path/to/dsh-enter-newline
 ```
 
-Restart the instance after installing: client bundle URLs carry a content hash,
-so an open tab would keep the old module.
+Reload the page afterwards.
 
-## Uninstall
+## Usage
 
-Remove `dsh-enter-newline` from `dsh.profile.bundles` and from `dependencies`,
-run `pnpm install`, then restart. No data is left behind.
+1. Type as usual; Enter now wraps the line
+2. Send with the button on the right (or your usual send shortcut)
+3. Want the old behaviour back temporarily? Sidebar → "换行设置" → turn it off
 
-## License
+## Configuration
 
-MIT © 2026 困困
+| Option | Default | Meaning |
+| --- | --- | --- |
+| Enter inserts newline | on | Off restores Enter-to-send |
 
----
+Stored locally in `localStorage: dsh-enter-newline`.
 
-## About AIGC
+## Limits & implementation
 
-> This project contains AIGC (AI-generated) content. AI shortened development time; every line of code was carefully reviewed.
+- Only the real keyboard event's `shiftKey` is rewritten and handed to Lexical — touching the DOM directly makes the editor reconcile away content (including pasted text)
+- Newlines inserted by an IME's own commit are unaffected
+- Paste/drag semantics are left untouched
+
+## Data & privacy
+
+A pure front-end plugin: no network requests, no telemetry, no writes to session files.
+
+## Version & author
+
+- Version **1.1.0** ([changelog](CHANGELOG.md))
+- Author: 困困 (KunKun) · GitHub [@KunKun24](https://github.com/KunKun24) · Telegram [@sad1881](https://t.me/sad1881)
+- License: [MIT](LICENSE)
+
+Contains AIGC-assisted code, reviewed line by line and verified on a real instance.

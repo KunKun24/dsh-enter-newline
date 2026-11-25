@@ -1,74 +1,76 @@
-# dsh-enter-newline
+# dsh-enter-newline · 回车换行
 
-[English](README.en.md) · DeepSeek Harness 插件 · MIT
+[**简体中文**](README.md) · [English](README.en.md)
 
-让 DeepSeek Harness 的聊天输入框「Enter 换行、不发送」。
+![version](https://img.shields.io/badge/version-1.1.0-blue)
+![license](https://img.shields.io/badge/license-MIT-2ea44f)
+![dsh](https://img.shields.io/badge/DSH-%E2%89%A50.2.0-6f42c1)
 
-按 Enter 只插入一个换行，发送请点发送按钮；`Shift+Enter` 行为不变，中文输入法
-组合过程中按 Enter 不会被拦截。
+按 Enter 只换行，不发送 —— 长提示词写到一半不会再飞出去。
 
-## 为什么需要它
+![输入两行文字后按 Enter，只是换行没有发送](assets/demo.gif)
 
-dsh 默认 Enter 直接发送，长提示词写到一半按 Enter 就飞出去了。
+> DeepSeek Harness（DSH）插件，需要 DSH 0.2.0 及以上。
 
-## 实现要点（踩过的坑）
+## 它做什么
 
-dsh 的输入框是 **Lexical 富文本编辑器**，内容由它自己的数据模型管理。
-早期版本用 `document.execCommand('insertLineBreak')` 直接改 DOM，会绕过模型，
-Lexical 下一次 reconcile 时把 DOM 重置回模型内容，**粘贴进去的文字会被一起冲掉**。
+DSH 默认按 Enter 就直接发送。写多段提示词时，一次误按就提前把半截话发出去。这个插件把 Enter 改成插入换行，发送改为点发送按钮（`Shift+Enter` 行为不变）。
 
-现在的做法是：只把真实键盘事件的 `shiftKey` 改写为 `true`，交给 Lexical 自己处理。
+## 功能
 
-- Lexical 判定为 `Shift+Enter`，走 `INSERT_LINE_BREAK_COMMAND`
-- dsh 的提交处理器里有一句 `if (event.shiftKey === true) return false`
-
-两条都成立，所以既不发送，也不破坏编辑器状态。全程不碰 DOM。
-
-## 配置
-
-侧边栏「换行设置」里可以开关，设置存在本机 `localStorage: dsh-enter-newline`。
-
-## 兼容性
-
-- 只作用于 `[data-lexical-editor]` 且位于 composer 内的输入框
-- 会话改名、设置页等其他输入框不受影响
+- Enter 插入换行，不再发送
+- `Shift+Enter` 保持原行为（同样换行，不发送）
+- 中文输入法拼写过程中按 Enter 不拦截，回车仍然用于选词
+- 侧边栏「换行设置」可随时开关，无需刷新页面
 
 ## 安装
 
-### 方式一：插件市场（推荐）
+**方式一：插件市场（推荐）**
 
-在 dsh 的「插件市场」里搜索包名直接安装。
+在 DSH 的「插件市场」里搜索 `dsh-enter-newline` 直接安装。
 
-### 方式二：Release 压缩包
-
-```bash
-dsh plugin --profile web add ./dsh-enter-newline-1.0.0.tgz
-```
-
-### 方式三：手动装到 profile
+**方式二：Release 包**
 
 ```bash
-# 1. 复制到 profile 的 vendor 目录
-cp -r dsh-enter-newline ~/.dsh/profiles/web/vendor/dsh-enter-newline
-
-# 2. 在 profile 的 package.json 里加一条依赖（file: 指向 vendor）
-#    "dependencies": { "dsh-enter-newline": "file:./vendor/dsh-enter-newline" }
-
-# 3. 装依赖并重启
-cd ~/.dsh/profiles/web && pnpm install && dsh web
+dsh plugin --profile web add https://github.com/KunKun24/dsh-enter-newline/releases/download/v1.1.0/dsh-enter-newline-1.1.0.tgz
 ```
 
-## 卸载
+**方式三：本地源码**
 
-从 `package.json` 的 `dependencies` 和 `dsh.profile.bundles` 里删掉 `dsh-enter-newline`，
-再 `pnpm install` 重启即可；插件本身不写任何业务数据。
+```bash
+dsh plugin --profile web add link:/path/to/dsh-enter-newline
+```
 
-## 许可证
+装完刷新页面即可。
 
-MIT
+## 使用
 
----
+1. 输入框里正常打字，按 Enter 换行
+2. 写完点右侧发送按钮（或原来的发送快捷键）
+3. 想临时恢复默认发送行为：侧边栏 →「换行设置」关闭开关
 
-## 关于 AIGC
+## 配置
 
-> 项目包含 AIGC 内容，AI 减少了开发时间；我们也认真审核了每一条代码。
+| 选项 | 默认 | 说明 |
+| --- | --- | --- |
+| Enter 换行 | 开 | 关闭后 Enter 恢复发送 |
+
+设置保存在本机浏览器 `localStorage: dsh-enter-newline`。
+
+## 限制与实现
+
+- 只改写真实键盘事件的 `shiftKey`，交给 Lexical 自己处理，不直接改 DOM —— 否则编辑器 reconcile 时会把内容重置（粘贴的文字也会一起丢）
+- 通过输入法软件“上屏”的换行不受影响
+- 不处理拖拽粘贴带来的换行语义
+
+## 数据与隐私
+
+纯本地前端插件，不发网络请求，不收集任何数据，不写入会话文件。
+
+## 版本与作者
+
+- 当前版本 **1.1.0**（[更新日志](CHANGELOG.md)）
+- 作者：困困 · GitHub [@KunKun24](https://github.com/KunKun24) · Telegram [@sad1881](https://t.me/sad1881)
+- 许可证：[MIT](LICENSE)
+
+包含 AIGC 辅助编写的内容，已逐行人工审阅并在真机验证。
