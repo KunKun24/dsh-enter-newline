@@ -2,15 +2,15 @@
 
 [**简体中文**](README.md) · [English](README.en.md)
 
-![version](https://img.shields.io/badge/version-1.1.0-blue)
+![version](https://img.shields.io/badge/version-1.1.1-blue)
 ![license](https://img.shields.io/badge/license-MIT-2ea44f)
-![dsh](https://img.shields.io/badge/DSH-%E2%89%A50.2.0-6f42c1)
+![dsh](https://img.shields.io/badge/DSH-%E2%89%A50.2.0--rc.2-6f42c1)
 
 Enter inserts a newline instead of sending — half-written prompts stay in the box.
 
 ![Type two lines and press Enter: it only wraps, nothing is sent](assets/demo.gif)
 
-> A DeepSeek Harness (DSH) plugin for DSH 0.2.0 or newer.
+> A DeepSeek Harness (DSH) plugin for DSH 0.2.0-rc.2 or newer (tested across 0.2.0-rc.2 → 0.2.3).
 
 ## What it does
 
@@ -32,7 +32,7 @@ Search `dsh-enter-newline` in DSH's plugin marketplace.
 **Option 2 — release tarball**
 
 ```bash
-dsh plugin --profile web add https://github.com/KunKun24/dsh-enter-newline/releases/download/v1.1.0/dsh-enter-newline-1.1.0.tgz
+dsh plugin --profile web add https://github.com/KunKun24/dsh-enter-newline/releases/download/v1.1.1/dsh-enter-newline-1.1.1.tgz
 ```
 
 **Option 3 — local source**
@@ -69,7 +69,7 @@ A pure front-end plugin: no network requests, no telemetry, no writes to session
 
 ## Version & author
 
-- Version **1.1.0** ([changelog](CHANGELOG.md))
+- Version **1.1.1** ([changelog](CHANGELOG.md))
 - Author: 困困 (KunKun) · GitHub [@KunKun24](https://github.com/KunKun24) · Telegram [@sad1881](https://t.me/sad1881)
 - License: [MIT](LICENSE)
 

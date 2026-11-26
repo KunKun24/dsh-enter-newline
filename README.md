@@ -2,15 +2,15 @@
 
 [**简体中文**](README.md) · [English](README.en.md)
 
-![version](https://img.shields.io/badge/version-1.1.0-blue)
+![version](https://img.shields.io/badge/version-1.1.1-blue)
 ![license](https://img.shields.io/badge/license-MIT-2ea44f)
-![dsh](https://img.shields.io/badge/DSH-%E2%89%A50.2.0-6f42c1)
+![dsh](https://img.shields.io/badge/DSH-%E2%89%A50.2.0--rc.2-6f42c1)
 
 按 Enter 只换行，不发送 —— 长提示词写到一半不会再飞出去。
 
 ![输入两行文字后按 Enter，只是换行没有发送](assets/demo.gif)
 
-> DeepSeek Harness（DSH）插件，需要 DSH 0.2.0 及以上。
+> DeepSeek Harness（DSH）插件，需要 DSH 0.2.0-rc.2 及以上（0.2.0-rc.2 → 0.2.3 全系列实测可用）。
 
 ## 它做什么
 
@@ -32,7 +32,7 @@ DSH 默认按 Enter 就直接发送。写多段提示词时，一次误按就提
 **方式二：Release 包**
 
 ```bash
-dsh plugin --profile web add https://github.com/KunKun24/dsh-enter-newline/releases/download/v1.1.0/dsh-enter-newline-1.1.0.tgz
+dsh plugin --profile web add https://github.com/KunKun24/dsh-enter-newline/releases/download/v1.1.1/dsh-enter-newline-1.1.1.tgz
 ```
 
 **方式三：本地源码**
@@ -69,7 +69,7 @@ dsh plugin --profile web add link:/path/to/dsh-enter-newline
 
 ## 版本与作者
 
-- 当前版本 **1.1.0**（[更新日志](CHANGELOG.md)）
+- 当前版本 **1.1.1**（[更新日志](CHANGELOG.md)）
 - 作者：困困 · GitHub [@KunKun24](https://github.com/KunKun24) · Telegram [@sad1881](https://t.me/sad1881)
 - 许可证：[MIT](LICENSE)
 

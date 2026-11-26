@@ -186,6 +186,9 @@ window.__ModuleLoader__.load({
 
     function apply(ctx) {
       startRuntime();
+      // The keyboard rewrite is pure DOM; the settings panel is a bonus. A host
+      // without these slots must keep Enter/Shift+Enter behaviour working.
+      try {
       ctx.slots.inject('sidebar.panellist', () =>
         ctx.slots.register(
           { name: 'sidebar.panellist', id: NS, order: 17, locale: NS, label: () => '换行设置' },
@@ -195,6 +198,7 @@ window.__ModuleLoader__.load({
       ctx.slots.inject('main', () =>
         ctx.slots.register({ name: 'main', key: NS, locale: NS }, Panel),
       );
+      } catch {}
     }
 
     return { apply, inject: ['slots'] };
